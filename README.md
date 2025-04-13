@@ -1,4 +1,4 @@
-# Social Media Analyzer with Gemini AI
+# Social Media Text Analyzer empowered with AI
 
 A Python application that analyzes social media content from Reddit and provides interactive chat capabilities using AI.
 
