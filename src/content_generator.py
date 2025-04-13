@@ -27,23 +27,23 @@ class ContentGenerator:
                     model_name="gemini-2.0-flash",
                     generation_config=generation_config
                 )
-                print("Successfully initialized Gemini 2.0 Flash model!")
+                print("Successfully initialized Chatbot model!")
                 
                 self.chat = self.model.start_chat(history=[])
                 print("Chat initialized successfully!")
                 
             except Exception as model_error:
-                print(f"Error initializing Gemini 2.0 Flash: {model_error}")
+                print(f"Error initializing the model: {model_error}")
                 raise
             
         except Exception as e:
-            print(f"Error initializing Gemini AI: {e}")
+            print(f"Error initializing the model: {e}")
             logging.error(f"Initialization failed: {str(e)}")
             raise
 
     def chat_loop(self):
         """Start an interactive chat loop with the user"""
-        print("\nWelcome to the Gemini 2.0 Flash Chatbot!")
+        print("\nWelcome to Content Generator Chatbot!")
         print("Type 'abort' to end the conversation")
         print("-" * 50)
 
