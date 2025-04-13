@@ -10,7 +10,7 @@ A Python application that analyzes social media content from Reddit and provides
   - Topic modeling
   - Entity recognition
   - Readability scoring
-- Interactive AI chat using Gemini 2.0 Flash
+- Interactive AI Content Generation
 - Data visualization
 - Multi-language detection
 
