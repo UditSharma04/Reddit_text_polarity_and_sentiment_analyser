@@ -24,7 +24,7 @@ A Python application that analyzes social media content from Reddit and provides
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/SocialMediaTextAnalyzer.git
+git clone https://github.com/ShreeshHunnur/SocialMediaTextAnalyzer.git
 cd SocialMediaTextAnalyzer
 ```
 
