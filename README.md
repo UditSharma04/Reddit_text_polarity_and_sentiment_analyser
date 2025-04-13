@@ -1,6 +1,6 @@
-# Social Media Analyzer with Gemini AI
+# Social Media Text Analyzer empowered with AI
 
-A Python application that analyzes social media content from Reddit and provides interactive chat capabilities using Google's Gemini AI.
+A Python application that analyzes social media content from Reddit and provides interactive chat capabilities using AI.
 
 ## Features
 
@@ -10,7 +10,7 @@ A Python application that analyzes social media content from Reddit and provides
   - Topic modeling
   - Entity recognition
   - Readability scoring
-- Interactive AI chat using Gemini 2.0 Flash
+- Interactive AI Content Generation
 - Data visualization
 - Multi-language detection
 
@@ -24,8 +24,8 @@ A Python application that analyzes social media content from Reddit and provides
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/SocialMediaAnalyzer.git
-cd SocialMediaAnalyzer
+git clone https://github.com/yourusername/SocialMediaTextAnalyzer.git
+cd SocialMediaTextAnalyzer
 ```
 
 2. Create and activate a virtual environment:
