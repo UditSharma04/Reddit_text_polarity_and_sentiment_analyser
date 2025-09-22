@@ -24,6 +24,7 @@ wheels/
 venv/
 ENV/
 env/
+.venv/
 
 # IDE
 .idea/
@@ -33,6 +34,13 @@ env/
 
 # Environment variables
 .env
+.python-version
+
+# OS
+.DS_Store
+
+# Notebooks
+.ipynb_checkpoints/
 
 # Project specific
 reddit_results.txt

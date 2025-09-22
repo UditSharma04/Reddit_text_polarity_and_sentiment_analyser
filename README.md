@@ -16,61 +16,78 @@ A Python application that analyzes social media content from Reddit and provides
 
 ## 🔧 Prerequisites
 
-- Python 3.8 or higher
+- Python 3.12.x (recommended). Note: Python 3.13 is not yet supported by some dependencies (e.g., `gensim`).
 - Reddit API credentials
-- Google Gemini API key (Get yours here)](https://aistudio.google.com/app/apikey)
+- Google Gemini API key ([Get one here](https://aistudio.google.com/app/apikey))
 
 ## ⚙️ Installation
 
-1. Clone the repository:
+1. Clone the repository (or open your local folder):
 ```bash
 git clone https://github.com/ShreeshHunnur/SocialMediaTextAnalyzer.git
 cd SocialMediaTextAnalyzer
+# If your folder name is different, cd into it (e.g., Reddit_analyser)
 ```
 
-2. Create and activate a virtual environment:
+2. Ensure Python 3.12 is available:
 ```bash
-python -m venv venv
-# On Windows
-venv\Scripts\activate
-# On Unix or MacOS
-source venv/bin/activate
+python3.12 --version
 ```
 
-3. Install dependencies:
+3. Create and activate a Python 3.12 virtual environment:
 ```bash
+python3.12 -m venv .venv
+# macOS/Linux
+source .venv/bin/activate
+# Windows (PowerShell)
+.venv\Scripts\Activate.ps1
+```
+
+4. Upgrade tooling and install dependencies:
+```bash
+python -m pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt
 ```
 
-4. Create a .env file with your API keys:
+5. Download the required spaCy English model:
+```bash
+python -m spacy download en_core_web_sm
+```
+
+6. Create a `.env` file with your API keys:
 ```env
 REDDIT_CLIENT_ID=your_reddit_client_id
 REDDIT_CLIENT_SECRET=your_reddit_client_secret
-REDDIT_USER_AGENT=your_reddit_user_agent
+REDDIT_USER_AGENT=script:reddit_analyser:1.0 (by u/your_username)
 GEMINI_API_KEY=your_gemini_api_key
 ```
 
-5. Initialize NLTK data:
+7. Initialize NLTK data (downloads to `nltk_data/` in the project):
 ```bash
 python initialize.py
 ```
 
 ## Usage
 
-1. Run the main application:
+1. Activate the virtual environment if not already active:
+```bash
+source .venv/bin/activate
+```
+
+2. Run the main application:
 ```bash
 python main.py
 ```
 
-2. Enter your search query when prompted
-3. View the analysis results
-4. Interact with the Gemini AI chatbot
-5. Type 'abort' to end the chat session
+3. Enter your search query when prompted
+4. View the analysis results
+5. Interact with the Gemini AI chatbot
+6. Type 'abort' to end the chat session
 
 ## 📁 Project Structure
 
 ```
-SocialMediaAnalyzer/
+Reddit_analyser/
 ├── config/
 │   └── config.py
 ├── src/
@@ -86,6 +103,20 @@ SocialMediaAnalyzer/
 ├── main.py
 └── requirements.txt
 ```
+
+## 🛠️ Tips & Troubleshooting
+
+- If installation fails on Python 3.13 (e.g., `gensim` or `scikit-learn` wheels unavailable), switch to Python 3.12:
+  - macOS: install via `brew install python@3.12` and use `python3.12`
+  - Create venv with `python3.12 -m venv .venv`
+- If spaCy errors about missing model, re-run:
+  ```bash
+  python -m spacy download en_core_web_sm
+  ```
+- If NLTK complains about missing `stopwords`, re-run:
+  ```bash
+  python initialize.py
+  ```
 
 ## 🤝 Contributing
 
