@@ -10,3 +10,4 @@ spacy
 scikit-learn
 pandas
 google-generativeai>=0.3.0 
+streamlit

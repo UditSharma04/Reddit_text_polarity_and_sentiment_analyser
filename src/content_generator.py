@@ -1,5 +1,13 @@
-import google.generativeai as genai
 import os
+os.environ.setdefault("GRPC_VERBOSITY", "ERROR")
+os.environ.setdefault("TF_CPP_MIN_LOG_LEVEL", "2")
+try:
+    from absl import logging as absl_logging
+    absl_logging.set_verbosity(absl_logging.ERROR)
+except Exception:
+    pass
+
+import google.generativeai as genai
 from typing import List, Dict
 import logging
 
@@ -41,6 +49,47 @@ class ContentGenerator:
             logging.error(f"Initialization failed: {str(e)}")
             raise
 
+        # In-memory analysis context used to ground chat replies
+        self.context_text = ""
+
+    def set_context(self, topic: str, keywords: List[str] | None = None, sentiment_data: Dict | None = None, entities: Dict | None = None):
+        """Store analysis context to ground future chat replies."""
+        try:
+            kw = []
+            for k in (keywords or []):
+                if isinstance(k, (list, tuple)) and len(k) == 2:
+                    kw.append(str(k[1]))
+                else:
+                    kw.append(str(k))
+            kw_text = ", ".join(kw[:20])
+
+            sent_text = ""
+            if sentiment_data:
+                sent_text = (
+                    f"Positive {sentiment_data.get('positive', 0):.1f}%, "
+                    f"Negative {sentiment_data.get('negative', 0):.1f}%, "
+                    f"Neutral {sentiment_data.get('neutral', 0):.1f}%"
+                )
+
+            ent_parts = []
+            if entities:
+                for et, el in entities.items():
+                    if el:
+                        ent_parts.append(f"{et}: {', '.join(sorted(set(el))[:15])}")
+            ent_text = " | ".join(ent_parts)
+
+            self.context_text = (
+                "You are assisting with the following analysis context.\n"
+                f"Topic: {topic}.\n"
+                f"Keywords: {kw_text}.\n"
+                + (f"Sentiment: {sent_text}.\n" if sent_text else "")
+                + (f"Entities: {ent_text}.\n" if ent_text else "")
+                + "Always assume follow-up questions refer to this topic unless the user says otherwise."
+            )
+        except Exception:
+            # Fail closed; empty context
+            self.context_text = ""
+
     def chat_loop(self):
         """Start an interactive chat loop with the user"""
         print("\nWelcome to Content Generator Chatbot!")
@@ -81,7 +130,58 @@ class ContentGenerator:
             logging.error(f"Chat error: {str(e)}")
 
     def generate_content(self, query: str, keywords: List = None, sentiment_data: Dict = None, platform: str = "reddit") -> List[str]:
-        """Maintain compatibility with existing interface but redirect to chat loop"""
-        print("\nStarting interactive chat mode...")
-        self.chat_loop()
-        return ["Chat session ended"] 
+        """Generate a short, engaging post based on analysis (non-interactive)."""
+        try:
+            keyword_list = []
+            if keywords:
+                # keywords may be list of tuples (count, word) or strings
+                for kw in keywords:
+                    if isinstance(kw, (list, tuple)) and len(kw) == 2:
+                        keyword_list.append(str(kw[1]))
+                    else:
+                        keyword_list.append(str(kw))
+            keyword_text = ", ".join(keyword_list[:10])
+
+            sentiment_summary = ""
+            if sentiment_data and isinstance(sentiment_data, dict):
+                sentiment_summary = (
+                    f"Positive {sentiment_data.get('positive', 0):.1f}%, "
+                    f"Negative {sentiment_data.get('negative', 0):.1f}%, "
+                    f"Neutral {sentiment_data.get('neutral', 0):.1f}%"
+                )
+
+            prompt_lines = [
+                "You are a helpful assistant that writes a concise, engaging social media post.",
+                f"Platform: {platform}.",
+                f"Topic/query: {query}.",
+                f"Important keywords: {keyword_text}.",
+            ]
+            if sentiment_summary:
+                prompt_lines.append(f"Sentiment distribution: {sentiment_summary}.")
+            prompt_lines.append(
+                "Write 1 short post (2-4 sentences), friendly tone, no hashtags, no emojis."
+            )
+            prompt = "\n".join(prompt_lines)
+
+            response = self.model.generate_content(prompt)
+            text = getattr(response, "text", None)
+            if not text and hasattr(response, "candidates") and response.candidates:
+                text = response.candidates[0].content.parts[0].text
+            return [text or ""]
+        except Exception as e:
+            logging.error(f"Content generation failed: {e}")
+            return [""]
+
+    def chat_reply(self, message: str) -> str:
+        """Return a single-turn chat response for UI chat box."""
+        try:
+            prefixed = (self.context_text + "\n\nUser message: " + message) if self.context_text else message
+            response = self.chat.send_message(prefixed)
+            if hasattr(response, "text"):
+                return response.text
+            if hasattr(response, "candidates") and response.candidates:
+                return response.candidates[0].content.parts[0].text
+            return ""
+        except Exception as e:
+            logging.error(f"Chat reply failed: {e}")
+            return ""

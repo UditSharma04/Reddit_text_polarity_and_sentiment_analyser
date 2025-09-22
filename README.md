@@ -84,6 +84,18 @@ python main.py
 5. Interact with the Gemini AI chatbot
 6. Type 'abort' to end the chat session
 
+### Simple UI (Streamlit)
+
+For a non-technical demo UI:
+
+```bash
+source .venv/bin/activate
+pip install -r requirements.txt  # ensure Streamlit is installed
+streamlit run app.py
+```
+
+Then open the provided local URL in your browser, enter a topic, and click Analyze.
+
 ## 📁 Project Structure
 
 ```
