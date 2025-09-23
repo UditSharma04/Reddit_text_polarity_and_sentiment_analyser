@@ -4,6 +4,9 @@ from src.text_analysis import TextAnalyzer
 from src.sentiment_analysis import calculate_sentiment_distribution
 from src.entity_analysis import EntityAnalyzer
 from src.visualization import Visualizer
+from src.advanced_visualization import AdvancedVisualizer
+from src.trend_analysis import TrendAnalyzer
+from src.research_export import ResearchExporter
 from src.utils import save_results, read_file
 from config.config import REDDIT_CONFIG
 from src.content_generator import ContentGenerator
@@ -15,6 +18,9 @@ async def main():
         text_analyzer = TextAnalyzer()
         entity_analyzer = EntityAnalyzer()
         visualizer = Visualizer()
+        advanced_visualizer = AdvancedVisualizer()
+        trend_analyzer = TrendAnalyzer()
+        research_exporter = ResearchExporter()
         content_generator = ContentGenerator()
 
         # Get user input
@@ -101,8 +107,28 @@ async def main():
                 print(generated_posts[0])
                 print("-" * 50)
 
-            # Show visualization
+            # Show basic visualization
             visualizer.plot_sentiment_distribution(sentiment_distribution)
+            
+            # Generate comprehensive analysis report
+            print("\n" + "="*80)
+            print("GENERATING COMPREHENSIVE RESEARCH-READY ANALYSIS")
+            print("="*80)
+            
+            # Create advanced visualizations and analysis
+            analysis_tables = advanced_visualizer.create_comprehensive_report(all_results, keywords)
+            
+            # Generate trend analysis
+            trend_results = trend_analyzer.generate_trend_report(all_results, keywords)
+            
+            # Create research-ready export package
+            print("\n" + "="*80)
+            print("CREATING RESEARCH EXPORT PACKAGE")
+            print("="*80)
+            
+            research_exporter.create_complete_research_package(
+                all_results, analysis_tables, input_query, keywords
+            )
 
     except ValueError as e:
         print(f"Input error: {e}")

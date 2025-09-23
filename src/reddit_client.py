@@ -62,6 +62,7 @@ class RedditClient:
 
     def process_post(self, post):
         from .sentiment_analysis import analyze_sentiment
+        from datetime import datetime
         return {
             'type': 'post',
             'title': post.title,
@@ -70,11 +71,16 @@ class RedditClient:
             'url': post.url,
             'subreddit': str(post.subreddit),
             'text': post.selftext,
-            'sentiment': analyze_sentiment(post.title + " " + post.selftext)
+            'sentiment': analyze_sentiment(post.title + " " + post.selftext),
+            'created_utc': datetime.fromtimestamp(post.created_utc),
+            'num_comments': post.num_comments,
+            'upvote_ratio': getattr(post, 'upvote_ratio', 0.5),
+            'id': post.id
         }
 
     async def process_comments(self, post, results):
         from .sentiment_analysis import analyze_sentiment
+        from datetime import datetime
         try:
             await post.load()
             comments = await post.comments()
@@ -88,7 +94,11 @@ class RedditClient:
                         'text': comment.body,
                         'post_title': post.title,
                         'post_url': post.url,
-                        'sentiment': analyze_sentiment(comment.body)
+                        'sentiment': analyze_sentiment(comment.body),
+                        'created_utc': datetime.fromtimestamp(comment.created_utc),
+                        'post_id': post.id,
+                        'comment_id': comment.id,
+                        'subreddit': str(post.subreddit)
                     })
         except Exception as e:
             print(f"Error fetching comments: {e}") 
