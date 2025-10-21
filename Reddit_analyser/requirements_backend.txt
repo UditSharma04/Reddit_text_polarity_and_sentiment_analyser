@@ -1,0 +1,29 @@
+# FastAPI Backend Requirements
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pydantic==2.5.0
+pydantic-settings==2.1.0
+python-multipart==0.0.6
+
+# Existing dependencies
+asyncpraw
+python-dotenv
+vaderSentiment==3.3.2
+langdetect
+nltk
+matplotlib
+seaborn
+plotly
+gensim
+textstat
+spacy==3.7.2
+scikit-learn
+pandas
+numpy
+google-generativeai>=0.3.0
+wordcloud
+tabulate
+plotly-express
+Pillow
+
+

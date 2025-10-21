@@ -1,265 +1,329 @@
-# 🚀 Enhanced Reddit Analyzer - Research-Grade Social Media Analysis
+# Redizer - Reddit Data Analysis Platform
 
-A powerful Python application that provides **research-grade analysis** of Reddit content with **interactive web interface**, advanced visualizations, and AI-powered insights.
+![License](https://img.shields.io/badge/license-All%20Rights%20Reserved-red)
+![Next.js](https://img.shields.io/badge/Next.js-14-black)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.104-green)
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
 
-## ✨ Key Features
+A powerful, modern web application for analyzing Reddit discussions with advanced AI-powered insights, sentiment analysis, and beautiful visualizations.
 
-### 🌐 **Interactive Web Interface**
-- **Professional Streamlit dashboard** with tabbed interface
-- **Real-time progress indicators** and status updates
-- **Auto-generating visualizations** with no page refreshes
-- **Immediate CSV/JSON data exports**
-- **Interactive charts** with zoom, hover, and filtering
+---
 
-### 📊 **Advanced Analytics**
-- **Sentiment analysis** with temporal trends
-- **Keyword extraction** with frequency visualization
-- **Topic modeling** and trend detection
-- **Named entity recognition**
-- **Community comparison** across subreddits
-- **Engagement metrics** analysis
-- **Time-based trend analysis**
+## 📋 Table of Contents
 
-### 🔬 **Research-Ready Outputs**
-- **High-resolution charts** (300 DPI PNG)
-- **Interactive HTML visualizations**
-- **Statistical data tables** (CSV, JSON)
-- **Publication-ready exports**
-- **Comprehensive trend reports**
-- **Word clouds** and temporal analysis
+- [Problem Statement](#problem-statement)
+- [Solution](#solution)
+- [Features](#features)
+- [Architecture](#architecture)
+- [Quick Start](#quick-start)
+- [Project Structure](#project-structure)
+- [Technologies Used](#technologies-used)
+- [Screenshots](#screenshots)
+- [License](#license)
 
-## 🔧 Prerequisites
+---
 
-- Python 3.12.x (recommended). Note: Python 3.13 is not yet supported by some dependencies (e.g., `gensim`).
-- Reddit API credentials
-- Google Gemini API key ([Get one here](https://aistudio.google.com/app/apikey))
+## 🎯 Problem Statement
 
-## ⚙️ Quick Setup
+Reddit is a goldmine of user-generated content, opinions, and discussions across countless topics. However, extracting meaningful insights from Reddit data presents several challenges:
 
-### 🚀 **One-Command Setup (Recommended)**
+1. **Information Overload**: Thousands of posts and comments make manual analysis impractical
+2. **Sentiment Understanding**: Difficulty in gauging overall sentiment and emotional tone
+3. **Trend Identification**: Hard to spot temporal patterns and trending topics
+4. **Content Summarization**: Time-consuming to distill key insights from lengthy discussions
+5. **Data Visualization**: Lack of intuitive tools to visualize Reddit data effectively
+6. **Research Needs**: Researchers and marketers need structured ways to analyze Reddit conversations
 
-1. **Clone and navigate to the project:**
-```bash
-git clone <your-repo-url>
-cd Reddit_analyser
+Traditional Reddit browsing and basic search features don't provide the analytical depth needed for research, market analysis, or content strategy.
+
+---
+
+## 💡 Solution
+
+**Redizer** is a full-stack web application that transforms Reddit data into actionable insights through:
+
+### Core Capabilities
+
+- **🔍 Advanced Search**: Query Reddit with customizable parameters (subreddits, time ranges, post limits)
+- **😊 Sentiment Analysis**: AI-powered sentiment detection (positive, negative, neutral) for posts and comments
+- **📊 Visual Analytics**: Interactive charts for sentiment distribution, keyword frequency, and subreddit activity
+- **☁️ Word Cloud Generation**: Beautiful word clouds highlighting key terms and topics
+- **📈 Temporal Analysis**: Time-based patterns showing activity by hour and day
+- **🤖 AI-Powered Insights**: GPT-generated summaries and content recommendations
+- **💬 Interactive Chat**: Ask questions and refine analysis through an AI assistant
+- **📤 Data Export**: Download results in CSV or JSON format for further analysis
+- **🎨 Modern UI/UX**: Clean, responsive interface with smooth loading states and intuitive navigation
+
+### Key Differentiators
+
+1. **Real-Time Analysis**: Process and analyze Reddit data on-demand
+2. **Multi-Level Analysis**: Choose between basic sentiment analysis or comprehensive analysis with all features
+3. **Expandable Post View**: Navigate posts and comments hierarchically with pagination
+4. **Export Capabilities**: Take your data and insights with you
+5. **AI Enhancement**: Leverage GPT for content generation and conversational insights
+
+---
+
+## ✨ Features
+
+### Analysis Features
+- ✅ Reddit post and comment extraction via PRAW
+- ✅ Sentiment analysis using VADER and TextBlob
+- ✅ Named Entity Recognition (NER) with spaCy
+- ✅ Keyword extraction and frequency analysis
+- ✅ Temporal pattern detection (hourly/daily activity)
+- ✅ Subreddit activity comparison
+- ✅ AI-generated summaries and insights
+
+### Visualization Features
+- ✅ Sentiment distribution (doughnut charts)
+- ✅ Top keywords (bar charts)
+- ✅ Subreddit activity (bar charts)
+- ✅ Word cloud generation (Python-based)
+- ✅ Temporal activity graphs (line charts)
+- ✅ Interactive timeline views
+
+### User Experience Features
+- ✅ Clean, modern UI with indigo color scheme
+- ✅ Tabbed interface (Overview, Visualizations, Data, Chat)
+- ✅ Loading states with progress messages
+- ✅ Expandable post/comment view
+- ✅ Pagination for large datasets (10 posts per page)
+- ✅ Copy-to-clipboard functionality
+- ✅ Export to CSV/JSON
+- ✅ Responsive design for all screen sizes
+
+---
+
+## 🏗️ Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                     Frontend (Next.js)                      │
+│  ┌────────────┐  ┌────────────┐  ┌────────────┐            │
+│  │  Search    │  │ Analytics  │  │   Chat     │            │
+│  │    UI      │  │   Charts   │  │ Interface  │            │
+│  └────────────┘  └────────────┘  └────────────┘            │
+│         │                │                │                  │
+│         └────────────────┴────────────────┘                  │
+│                          │                                   │
+│                    API Client (Axios)                        │
+└──────────────────────────┼──────────────────────────────────┘
+                           │ HTTP/REST
+                           │
+┌──────────────────────────┼──────────────────────────────────┐
+│                          ▼                                   │
+│                  FastAPI Backend                             │
+│  ┌─────────────────────────────────────────────────────┐    │
+│  │  API Endpoints (/search, /analyze, /chat, etc.)     │    │
+│  └─────────────────────────────────────────────────────┘    │
+│         │              │              │              │       │
+│  ┌──────▼─────┐ ┌─────▼──────┐ ┌────▼─────┐ ┌──────▼────┐ │
+│  │   Reddit   │ │ Sentiment  │ │  Trend   │ │   GPT     │ │
+│  │   Client   │ │  Analysis  │ │ Analysis │ │ Generator │ │
+│  │   (PRAW)   │ │  (VADER)   │ │ (pandas) │ │ (OpenAI)  │ │
+│  └────────────┘ └────────────┘ └──────────┘ └───────────┘ │
+└─────────────────────────────────────────────────────────────┘
 ```
 
-2. **Create and activate Python 3.12 virtual environment:**
-```bash
-python3.12 -m venv .venv
-source .venv/bin/activate  # macOS/Linux
-# OR .venv\Scripts\Activate.ps1  # Windows PowerShell
-```
+### Technology Stack
 
-3. **Run the automated setup script:**
-```bash
-./setup_enhanced.sh
-```
-*This script automatically installs all dependencies, downloads required models, and verifies the installation.*
+**Frontend:**
+- Next.js 14 (React framework)
+- TypeScript (type safety)
+- Tailwind CSS (styling)
+- Chart.js (visualizations)
+- Lucide Icons (UI icons)
+- Axios (API requests)
 
-4. **Create your `.env` file with API credentials:**
-```env
-REDDIT_CLIENT_ID=your_reddit_client_id
-REDDIT_CLIENT_SECRET=your_reddit_client_secret
-REDDIT_USER_AGENT=script:reddit_analyser:1.0 (by u/your_username)
-GEMINI_API_KEY=your_gemini_api_key
-```
+**Backend:**
+- FastAPI (Python web framework)
+- PRAW (Reddit API wrapper)
+- VADER & TextBlob (sentiment analysis)
+- spaCy (NLP and entity recognition)
+- pandas (data processing)
+- OpenAI GPT (AI generation)
+- WordCloud (visualization)
 
-### 🔧 **Manual Setup (Alternative)**
+---
 
-If you prefer manual installation:
+## 🚀 Quick Start
 
-1. **Ensure Python 3.12 is available:**
-```bash
-python3.12 --version
-```
+### Prerequisites
 
-2. **Install dependencies:**
-```bash
-python -m pip install --upgrade pip setuptools wheel
-pip install -r requirements.txt
-python -m spacy download en_core_web_sm
-python initialize.py
-```
+- **Node.js** 18+ and npm/yarn
+- **Python** 3.8+ and pip
+- **Reddit API credentials** (client ID, client secret, user agent)
+- **OpenAI API key** (for AI features)
 
-## 🌐 Usage - Interactive Web Interface (Recommended)
+### Installation
 
-### **Start the Enhanced Web Application:**
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd Redizer
+   ```
 
-```bash
-# Activate virtual environment (if not already active)
-source .venv/bin/activate
+2. **Set up Backend**
+   ```bash
+   cd Reddit_analyser
+   
+   # Install Python dependencies
+   pip install -r requirements_backend.txt
+   
+   # Configure credentials (see Reddit_analyser/README.md)
+   # Edit config/config.py with your API keys
+   ```
 
-# Launch the interactive web interface
-./run_streamlit.sh
-```
+3. **Set up Frontend**
+   ```bash
+   cd ../frontend
+   
+   # Install Node dependencies
+   npm install
+   ```
 
-**The app will automatically open in your browser at:** `http://localhost:8501`
+4. **Start the Application**
 
-### **Using the Web Interface:**
+   **Terminal 1 - Backend:**
+   ```bash
+   cd Reddit_analyser
+   python backend.py
+   # Backend runs on http://localhost:8000
+   ```
 
-1. **Enter your research topic** (e.g., "climate change", "AI in education", "cryptocurrency")
-2. **Select analysis type** from the sidebar:
-   - **Basic Analysis** - Quick sentiment and keywords
-   - **Advanced Research Analysis** - Full research features
-   - **Trend Analysis** - Focus on temporal patterns  
-   - **All Features** - Complete analysis suite
-3. **Click "Analyze Reddit Data"** and watch the progress bar
-4. **Explore results** in organized tabs:
-   - **📊 Overview** - Sentiment, keywords, entities
-   - **📈 Trends** - Time-based activity analysis
-   - **🏘️ Communities** - Subreddit comparison
-   - **📋 Data** - Raw data and exports
-5. **Download results** instantly (CSV/JSON)
-6. **View auto-generated visualizations** in `streamlit_visualizations/` folder
+   **Terminal 2 - Frontend:**
+   ```bash
+   cd frontend
+   npm run dev
+   # Frontend runs on http://localhost:3000
+   ```
 
-## 💻 Command-Line Interface (Alternative)
+5. **Access the Application**
+   
+   Open your browser to `http://localhost:3000`
 
-For programmatic use or batch processing:
+For detailed setup instructions, see:
+- [Backend Setup Guide](Reddit_analyser/README.md)
+- [Frontend Setup Guide](frontend/README.md)
 
-```bash
-source .venv/bin/activate
-python main.py
-```
-
-Follow the prompts to enter your search query and view terminal-based results.
+---
 
 ## 📁 Project Structure
 
 ```
-Reddit_analyser/
-├── 🌐 app.py                          # Enhanced Streamlit web interface
-├── 💻 main.py                         # Command-line version
-├── ⚙️ requirements.txt                # Dependencies
-├── 🚀 setup_enhanced.sh               # Automated setup script
-├── 🌐 run_streamlit.sh                # Launch web interface
-├── 📚 ENHANCED_FEATURES.md            # New features documentation
-├── 📖 STREAMLIT_GUIDE.md              # Web interface guide
-├── config/
-│   └── config.py                      # Application configuration
-├── src/                               # 🧠 Core analysis modules
-│   ├── reddit_client.py               # Reddit API integration
-│   ├── sentiment_analysis.py          # Sentiment classification
-│   ├── text_analysis.py               # Text processing & keywords
-│   ├── entity_analysis.py             # Named entity recognition
-│   ├── advanced_visualization.py      # Research-grade charts
-│   ├── trend_analysis.py              # Temporal trend analysis
-│   ├── research_export.py             # Publication exports
-│   ├── content_generator.py           # AI content generation
-│   └── visualization.py               # Basic visualizations
-└── streamlit_visualizations/          # 📊 Auto-generated charts
-    ├── temporal_trends.png            # Time-based analysis
-    ├── subreddit_analysis.png         # Community comparison
-    ├── engagement_metrics.png         # User engagement
-    ├── wordcloud.png                  # Word frequency
-    └── interactive_timeline.html      # Interactive charts
+Redizer/
+├── README.md                          # This file
+├── Reddit_analyser/                   # Backend (FastAPI + Python)
+│   ├── backend.py                     # Main FastAPI application
+│   ├── requirements_backend.txt       # Python dependencies
+│   ├── config/
+│   │   └── config.py                  # API credentials configuration
+│   ├── src/
+│   │   ├── reddit_client.py          # Reddit API interaction
+│   │   ├── sentiment_analysis.py     # Sentiment processing
+│   │   ├── text_analysis.py          # Text and keyword analysis
+│   │   ├── trend_analysis.py         # Temporal pattern analysis
+│   │   ├── entity_analysis.py        # Named entity recognition
+│   │   ├── content_generator.py      # AI content generation
+│   │   └── utils.py                  # Helper functions
+│   └── README.md                      # Backend documentation
+│
+└── frontend/                          # Frontend (Next.js + TypeScript)
+    ├── app/
+    │   ├── page.tsx                   # Main application page
+    │   ├── layout.tsx                 # Root layout
+    │   └── globals.css                # Global styles
+    ├── components/
+    │   ├── SearchBar.tsx              # Search input component
+    │   ├── MetricsCard.tsx            # Metrics display
+    │   ├── SentimentChart.tsx         # Sentiment visualization
+    │   ├── KeywordsChart.tsx          # Keywords visualization
+    │   ├── SubredditChart.tsx         # Subreddit activity chart
+    │   ├── WordCloudChart.tsx         # Word cloud display
+    │   ├── TemporalGraph.tsx          # Temporal trends chart
+    │   ├── RedditPostsView.tsx        # Expandable post/comment view
+    │   ├── ChatInterface.tsx          # AI chat interface
+    │   └── GeneratedContent.tsx       # AI-generated content display
+    ├── lib/
+    │   └── api.ts                     # API client functions
+    ├── package.json                   # Node dependencies
+    └── README.md                      # Frontend documentation
 ```
-
-## 📊 What You Get
-
-### **🌐 Interactive Web Dashboard**
-- **Professional interface** with organized tabs
-- **Real-time progress** indicators during analysis
-- **Auto-generating charts** with no page refreshes
-- **Immediate downloads** (CSV, JSON)
-- **Interactive visualizations** with hover details
-
-### **📈 Research-Grade Analytics**
-- **Temporal trend analysis** showing when topics were popular
-- **Subreddit community comparison** with engagement metrics
-- **Sentiment analysis** with time-based patterns
-- **Word frequency analysis** with interactive charts
-- **Named entity recognition** and topic modeling
-
-### **🔬 Publication-Ready Outputs**
-- **High-resolution charts** (300 DPI PNG) for papers
-- **Interactive HTML visualizations** for presentations
-- **Statistical data tables** with comprehensive metrics
-- **CSV/JSON exports** for further analysis
-- **Professional formatting** suitable for research
-
-## 🛠️ Troubleshooting
-
-### **Common Issues:**
-
-**🐍 Python Version Issues:**
-- Use Python 3.12.x (not 3.13) for best compatibility
-- Install via `brew install python@3.12` on macOS
-
-**📦 Dependency Issues:**
-```bash
-# Re-run the setup script
-./setup_enhanced.sh
-
-# Or manually install missing components
-python -m spacy download en_core_web_sm
-python initialize.py
-```
-
-**🌐 Web Interface Issues:**
-```bash
-# Restart the Streamlit app
-./run_streamlit.sh
-
-# Or run directly
-streamlit run app.py
-```
-
-**🔑 API Issues:**
-- Verify your `.env` file has correct Reddit API credentials
-- Check your Gemini API key is valid
-- Ensure API rate limits aren't exceeded
-
-## 🚀 Quick Start Guide
-
-### **Ready to analyze Reddit data? Follow these steps:**
-
-1. **📥 Setup (One-time):**
-```bash
-# Clone and navigate to project
-cd Reddit_analyser
-
-# Create virtual environment
-python3.12 -m venv .venv
-source .venv/bin/activate
-
-# Run automated setup
-./setup_enhanced.sh
-```
-
-2. **🔑 Add your API keys to `.env` file:**
-```env
-REDDIT_CLIENT_ID=your_reddit_client_id
-REDDIT_CLIENT_SECRET=your_reddit_client_secret  
-REDDIT_USER_AGENT=script:reddit_analyser:1.0 (by u/your_username)
-GEMINI_API_KEY=your_gemini_api_key
-```
-
-3. **🌐 Launch the web interface:**
-```bash
-./run_streamlit.sh
-```
-
-4. **🎉 Start analyzing!**
-   - Open `http://localhost:8501` in your browser
-   - Enter any topic (e.g., "climate change", "AI trends")
-   - Watch the automated analysis and visualizations
-   - Download results and view generated charts
-
-**That's it! Your enhanced Reddit analyzer is ready for research-grade analysis.**
 
 ---
 
-## 📚 Additional Resources
+## 🛠️ Technologies Used
 
-- **📖 [Enhanced Features Guide](ENHANCED_FEATURES.md)** - Complete feature overview
-- **🌐 [Streamlit Interface Guide](STREAMLIT_GUIDE.md)** - Detailed web interface documentation
-- **📁 [Project Structure](PROJECT_STRUCTURE.md)** - Clean codebase organization
+### Frontend
+- [Next.js 14](https://nextjs.org/) - React framework
+- [TypeScript](https://www.typescriptlang.org/) - Type-safe JavaScript
+- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS
+- [Chart.js](https://www.chartjs.org/) - Data visualization
+- [React Chart.js 2](https://react-chartjs-2.js.org/) - React wrapper
+- [Lucide Icons](https://lucide.dev/) - Icon library
+- [Axios](https://axios-http.com/) - HTTP client
+
+### Backend
+- [FastAPI](https://fastapi.tiangolo.com/) - Modern Python web framework
+- [PRAW](https://praw.readthedocs.io/) - Python Reddit API Wrapper
+- [VADER Sentiment](https://github.com/cjhutto/vaderSentiment) - Sentiment analysis
+- [TextBlob](https://textblob.readthedocs.io/) - Text processing
+- [spaCy](https://spacy.io/) - NLP library
+- [pandas](https://pandas.pydata.org/) - Data manipulation
+- [OpenAI](https://openai.com/) - GPT integration
+- [WordCloud](https://github.com/amueller/word_cloud) - Word cloud generation
+- [Uvicorn](https://www.uvicorn.org/) - ASGI server
+
+---
+
+## 📸 Screenshots
+
+### Main Dashboard
+The main interface with search, sentiment analysis, and key metrics.
+
+### Visualizations Tab
+Word cloud and temporal activity graphs showing trends over time.
+
+### Data Explorer
+Expandable post view with pagination for easy navigation through results.
+
+### AI Chat Assistant
+Interactive chat interface for asking questions and refining analysis.
+
+---
+
+## 📄 License
+
+**Copyright © 2025. All Rights Reserved.**
+
+This software and associated documentation files (the "Software") are proprietary and confidential. Unauthorized copying, modification, distribution, or use of this Software, via any medium, is strictly prohibited without explicit written permission from the owner.
+
+For licensing inquiries, please contact: [Your Contact Information]
+
+---
 
 ## 🤝 Contributing
 
-Feel free to fork the project and submit pull requests.
+This is a proprietary project. Contributions are not accepted at this time.
 
-## 📜 License
+---
 
-This project is licensed under the MIT License - see the LICENSE file for details. 
+## 📧 Contact & Support
+
+For questions, issues, or feature requests, please contact:
+- **Email**: [Your Email]
+- **GitHub**: [Your GitHub Profile]
+
+---
+
+## 🙏 Acknowledgments
+
+- Reddit API for providing access to discussion data
+- OpenAI for GPT capabilities
+- The open-source community for amazing libraries and tools
+
+---
+
+**Built with ❤️ using Next.js and FastAPI**
+
