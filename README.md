@@ -299,7 +299,7 @@ Interactive chat interface for asking questions and refining analysis.
 
 This software and associated documentation files (the "Software") are proprietary and confidential. Unauthorized copying, modification, distribution, or use of this Software, via any medium, is strictly prohibited without explicit written permission from the owner.
 
-For licensing inquiries, please contact: [Your Contact Information]
+For licensing inquiries, please contact: [work.udit04@gmail.com]
 
 ---
 
@@ -312,15 +312,16 @@ This is a proprietary project. Contributions are not accepted at this time.
 ## 📧 Contact & Support
 
 For questions, issues, or feature requests, please contact:
-- **Email**: [Your Email]
-- **GitHub**: [Your GitHub Profile]
+- [https://github.com/UditSharma04]
+- [https://github.com/ShreeshHunnur]
+  
 
 ---
 
 ## 🙏 Acknowledgments
 
 - Reddit API for providing access to discussion data
-- OpenAI for GPT capabilities
+- Gemini for LLM capabilities
 - The open-source community for amazing libraries and tools
 
 ---
